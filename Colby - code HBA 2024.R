@@ -13,13 +13,12 @@ library(lme4)
 setwd("/Users/acolby/Desktop/HBA 2024")
 data = read.csv("data_mar_10.csv")
 
-data$OT_SG = (data$OT_pg.mL)*((mean(data$SG)-1.0)/((data$SG)-1.0)) ## control OT concentration in urine with specific gravity 
+data$OT_SG = as.numeric(data$OT_SG)
 data$log_OT = log(data$OT_SG) ## log OT 
 data$age = as.numeric(data$age)
 data$afb_observed = as.numeric(data$afb_observed)
 data$n_births_observed = as.numeric(data$n_births_observed)
 
-data$OT_SG = as.numeric(data$OT_SG)
 data$PID = as.factor(data$PID)
 data$sex = as.factor(data$sex)
 data$context = as.factor(data$context)
