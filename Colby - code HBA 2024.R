@@ -75,8 +75,8 @@ variance_extraction_1 = sd_exba_1^2
 variance_total_1 <- variance_PID_1 + variance_residual_1 + variance_extraction_1 
 ## repeatability
 repeatability_1 <- variance_PID_1 / variance_total_1
-median(repeatability_1) ## median = 0.3455782
-mean(repeatability_1) ## mean = 0.3458724
+median(repeatability_1) ## median = 0.3448974
+mean(repeatability_1) ## mean = 0.0.3440946
 
 ################
 ## HPD Intervals
@@ -95,7 +95,7 @@ upper_bound_index_1 <- which(cumulative_probs_1 >= 1 - (1 - confidence_level)/2)
 hpd_lower_1 <- sorted_variances_1[lower_bound_index_1]
 hpd_upper_1 <- sorted_variances_1[upper_bound_index_1]
 # display the result
-cat("HPD Interval:", hpd_lower_1, "to", hpd_upper_1, "\n") ## HPD Interval: 0.2275751 to 0.4902185 
+cat("HPD Interval:", hpd_lower_1, "to", hpd_upper_1, "\n") ## HPD Interval: 0.2263581 to 0.4902073 
 
 ############################################
 ## estimates and standard deviations for PID
@@ -163,7 +163,7 @@ conditional_effects(afr.model.1)
 plot(afr.model.1)
 posterior_samples_afr = as.data.frame(as.matrix(afr.model.1))
 sum_negative <- sum(posterior_samples_afr$bsp_memeanOTsdOT < 0)
-sum_negative/9000 ## 0.064
+sum_negative/9000 ## 0.06711111
 
 #####################
 ## extraversion model 
@@ -175,11 +175,11 @@ extra.data <- no.dup.df %>%
 extra.mod.1 = bf(scale(extraversionM) ~ me(meanOT, sdOT))
 
 extra.model.1 <- brm(extra.mod.1, data = extra.data, 
-                     prior = c(
-                       prior(normal(0,2), class = "Intercept"),
-                       prior(normal(0,1), class = "b")),
-                     chains=3, cores=3, warmup=500, iter=3000,
-                     control = list(adapt_delta = 0.999))
+                   prior = c(
+                     prior(normal(0,2), class = "Intercept"),
+                     prior(normal(0,1), class = "b")),
+                   chains=3, cores=3, warmup=500, iter=3000,
+                   control = list(adapt_delta = 0.999))
 saveRDS(extra.model.1, "extraversion.model.RDS")
 
 summary(extra.model.1)
@@ -187,7 +187,7 @@ conditional_effects(extra.model.1)
 plot(extra.model.1)
 posterior_samples_extra = as.data.frame(as.matrix(extra.model.1))
 sum_positive_extra <- sum(posterior_samples_extra$bsp_memeanOTsdOT > 0)
-sum_positive_extra/7500 ## 0.4965333
+sum_positive_extra/7500 ## 0.4868
 
 
 #################
@@ -200,11 +200,11 @@ open.data <- no.dup.df %>%
 open.mod.1 = bf(scale(opennessM) ~ me(meanOT, sdOT))
 
 open.model.1 <- brm(open.mod.1, data = open.data, 
-                    prior = c(
-                      prior(normal(0,2), class = "Intercept"),
-                      prior(normal(0,1), class = "b")),
-                    chains=3, cores=3, warmup=500, iter=3000,
-                    control = list(adapt_delta = 0.999))
+                     prior = c(
+                       prior(normal(0,2), class = "Intercept"),
+                       prior(normal(0,1), class = "b")),
+                     chains=3, cores=3, warmup=500, iter=3000,
+                     control = list(adapt_delta = 0.999))
 saveRDS(open.model.1, "openness.model.RDS")
 
 summary(open.model.1)
@@ -212,4 +212,4 @@ conditional_effects(open.model.1)
 plot(open.model.1)
 posterior_samples_open = as.data.frame(as.matrix(open.model.1))
 sum_positive_open <- sum(posterior_samples_open$bsp_memeanOTsdOT > 0)
-sum_positive_open/7500 ## 0.5405333
+sum_positive_open/7500 ## 0.5270667
