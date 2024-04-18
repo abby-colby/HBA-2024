@@ -107,8 +107,8 @@ PID <- PID[, c("PID", names(PID)[-ncol(PID)])]
 colnames(PID) <- c("PID", "meanOT", "sdOT", "2.5Q", "97.5Q")
 
 new_df <- merge(PID, data, by = "PID", all = TRUE)
-new_df$mean_OT = as.numeric(new_df$meanOT)
-new_df$sd_OT = as.numeric(new_df$sdOT)
+new_df$meanOT = as.numeric(new_df$meanOT)
+new_df$sdOT = as.numeric(new_df$sdOT)
 no.dup.df =  new_df %>%
   distinct(PID, .keep_all = TRUE)
 
