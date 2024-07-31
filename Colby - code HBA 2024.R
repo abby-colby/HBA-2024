@@ -35,7 +35,7 @@ data$age.z=scale(data$age)
 
 ## age scaled - both sexes
 
-rep.1 <- bf(log_OT | cens(censored) ~ s(age.z, by = sex) + BF + context + (1|PID) + (1|extraction_batch))
+rep.1 <- bf(log_OT | cens(censored) ~ 1 + s(age.z, by = sex) + BF + context + (1|PID) + (1|extraction_batch))
 
 rep.model.1 <- brm(rep.1, data = data, 
                    prior = c(
@@ -121,7 +121,7 @@ fert.data <- no.dup.df %>%
 
 ## males and females
 
-fert.mod.1 = bf(scale(n_births_observed) ~ s(scale(age)) + me(meanOT, sdOT)*sex)
+fert.mod.1 = bf(scale(n_births_observed) ~ 1 + s(scale(age)) + me(meanOT, sdOT) + sex)
 
 fert.model.1 <- brm(fert.mod.1, data = fert.data, 
                     prior = c(
@@ -147,7 +147,7 @@ afr.data <- no.dup.dfa %>%
 
 ## males and females
 
-afr.mod.1 = bf(scale(afb_observed) ~ me(meanOT, sdOT)*sex)
+afr.mod.1 = bf(scale(afb_observed) ~ 1 + me(meanOT, sdOT) + sex)
 
 afr.model.1 <- brm(afr.mod.1, data = afr.data, 
                    prior = c(
@@ -171,7 +171,7 @@ sum_negative/9000 ## 0.06711111
 extra.data <- no.dup.df %>%
   filter(!is.na(extraversionM))
 
-extra.mod.1 = bf(scale(extraversionM) ~ me(meanOT, sdOT))
+extra.mod.1 = bf(scale(extraversionM) ~ 1 + me(meanOT, sdOT))
 
 extra.model.1 <- brm(extra.mod.1, data = extra.data, 
                    prior = c(
@@ -196,7 +196,7 @@ sum_positive_extra/7500 ## 0.4868
 open.data <- no.dup.df %>%
   filter(!is.na(opennessM))
 
-open.mod.1 = bf(scale(opennessM) ~ me(meanOT, sdOT))
+open.mod.1 = bf(scale(opennessM) ~ 1 + me(meanOT, sdOT))
 
 open.model.1 <- brm(open.mod.1, data = open.data, 
                      prior = c(
